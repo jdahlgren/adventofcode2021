@@ -21,4 +21,18 @@ class Day1Test {
     assertThat(result, is(1581));
   }
 
+  @Test
+  void day1Part2Example() {
+    Day1 day1 = new Day1();
+    var result = day1.calculateNumberOfDepthIncreasesSlidingWindow3("day1example");
+    assertThat(result, is(5));
+  }
+
+  @Test
+  void day1Part2() {
+    Day1 day1 = new Day1();
+    var result = day1.calculateNumberOfDepthIncreasesSlidingWindow3("day1");
+    assertThat(result, is(1618));
+  }
+
 }
