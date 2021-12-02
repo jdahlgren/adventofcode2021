@@ -21,4 +21,18 @@ class Day2Test {
     assertThat(posAndDepth, is(1938402));
   }
 
+  @Test
+  void day2Part2Example() {
+    Day2 day2 = new Day2();
+    var posAndDepth = day2.calculatePositionWithAim("day2example.txt");
+    assertThat(posAndDepth, is(900));
+  }
+
+  @Test
+  void day2Part2() {
+    Day2 day2 = new Day2();
+    var posAndDepth = day2.calculatePositionWithAim("day2.txt");
+    assertThat(posAndDepth, is(1947878632));
+  }
+
 }
