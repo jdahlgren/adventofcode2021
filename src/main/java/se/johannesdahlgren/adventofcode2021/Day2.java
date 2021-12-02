@@ -12,12 +12,10 @@ public class Day2 {
       String[] split = commandUnit.split(" ");
       String command = split[0];
       int unit = Integer.parseInt(split[1]);
-      if ("forward".equals(command)) {
-        horizontalPos += unit;
-      } else if ("down".equals(command)) {
-        depth += unit;
-      } else if ("up".equals(command)) {
-        depth -= unit;
+      switch (command) {
+        case "forward" -> horizontalPos += unit;
+        case "down" -> depth += unit;
+        case "up" -> depth -= unit;
       }
     }
     return horizontalPos * depth;
@@ -32,13 +30,13 @@ public class Day2 {
       String[] split = commandUnit.split(" ");
       String command = split[0];
       int unit = Integer.parseInt(split[1]);
-      if ("forward".equals(command)) {
-        horizontalPos += unit;
-        depth += aim * unit;
-      } else if ("down".equals(command)) {
-        aim += unit;
-      } else if ("up".equals(command)) {
-        aim -= unit;
+      switch (command) {
+        case "forward" -> {
+          horizontalPos += unit;
+          depth += aim * unit;
+        }
+        case "down" -> aim += unit;
+        case "up" -> aim -= unit;
       }
     }
     return horizontalPos * depth;
