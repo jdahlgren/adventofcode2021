@@ -23,8 +23,19 @@ public class Day4 {
   public int playBingo() {
     for (Integer calledNumber : bingoGame.calledNumbers()) {
       markNumberOnBoards(calledNumber);
-      Optional<BingoBoard> winnerBoard = getWinnerBoard();
+      Optional<BingoBoard> winnerBoard = getWinnerBoard(calledNumber);
       if (winnerBoard.isPresent()) {
+        return calculateBingoScore(winnerBoard.get(), calledNumber);
+      }
+    }
+    return 0;
+  }
+
+  public int playBingoLastWinningBoard() {
+    for (Integer calledNumber : bingoGame.calledNumbers()) {
+      markNumberOnBoards(calledNumber);
+      Optional<BingoBoard> winnerBoard = getWinnerBoard(calledNumber);
+      if (winnerBoard.isPresent() && bingoGame.hasAllBoardsWon()) {
         return calculateBingoScore(winnerBoard.get(), calledNumber);
       }
     }
@@ -41,9 +52,9 @@ public class Day4 {
     return sumOfUnmarkedNumbers * lastCalledNumber;
   }
 
-  private Optional<BingoBoard> getWinnerBoard() {
+  private Optional<BingoBoard> getWinnerBoard(Integer calledNumber) {
     for (BingoBoard bingoBoard : bingoGame.bingoBoards()) {
-      if (bingoBoard.hasBingo()) {
+      if (bingoBoard.hasBingo() && bingoBoard.getCallingNumberWhenBingo() == calledNumber) {
         return Optional.of(bingoBoard);
       }
     }

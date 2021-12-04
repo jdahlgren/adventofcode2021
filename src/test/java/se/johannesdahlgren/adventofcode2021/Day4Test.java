@@ -20,4 +20,18 @@ class Day4Test {
     var score = day4.playBingo();
     assertThat(score, Is.is(44736));
   }
+
+  @Test
+  void part2Example() {
+    Day4 day4 = new Day4("day4example.txt");
+    var score = day4.playBingoLastWinningBoard();
+    assertThat(score, Is.is(1924));
+  }
+
+  @Test
+  void part2() {
+    Day4 day4 = new Day4("day4.txt");
+    var score = day4.playBingoLastWinningBoard();
+    assertThat(score, Is.is(1827));
+  }
 }

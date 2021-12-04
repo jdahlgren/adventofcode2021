@@ -8,6 +8,7 @@ import lombok.Getter;
 public final class BingoBoard {
 
   private final List<List<BingoNumber>> bingoNumberGrid;
+  private int callingNumberWhenBingo = -1;
 
   public BingoBoard(List<List<BingoNumber>> bingoNumberGrid) {
     this.bingoNumberGrid = bingoNumberGrid;
@@ -21,7 +22,14 @@ public final class BingoBoard {
     bingoNumberGrid.stream()
         .flatMap(Collection::stream)
         .filter(bingoNumber -> bingoNumber.getNumber() == calledNumber)
-        .forEach(bingoNumber -> bingoNumber.setMarked(true));
+        .forEach(bingoNumber -> markBingoNumber(calledNumber, bingoNumber));
+  }
+
+  private void markBingoNumber(Integer calledNumber, BingoNumber bingoNumber) {
+    bingoNumber.setMarked(true);
+    if(hasBingo() && callingNumberWhenBingo == -1) {
+      callingNumberWhenBingo = calledNumber;
+    }
   }
 
   private boolean checkRowBingo() {
