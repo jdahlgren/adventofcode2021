@@ -20,4 +20,18 @@ class Day3Test {
     var powerConsumption = day3.getPowerConsumption();
     assertThat(powerConsumption, is(2724524));
   }
+
+  @Test
+  void part2Example() {
+    Day3 day3 = new Day3("day3example.txt");
+    var powerConsumption = day3.getLifeSupportRating();
+    assertThat(powerConsumption, is(230));
+  }
+
+  @Test
+  void part2() {
+    Day3 day3 = new Day3("day3.txt");
+    var powerConsumption = day3.getLifeSupportRating();
+    assertThat(powerConsumption, is(2775870));
+  }
 }
