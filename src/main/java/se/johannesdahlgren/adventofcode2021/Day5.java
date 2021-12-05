@@ -19,6 +19,14 @@ public class Day5 {
     return hydroThermalVentsMap.calculateOverlappingLines(atLeastNumberOfOverlaps);
   }
 
+  public long getNumberOfPointsWithOverlapWithDiagonalLines(int atLeastNumberOfOverlaps) {
+    hydroThermalVentsMap.drawHorizontalAndVerticalLines();
+    hydroThermalVentsMap.drawDiagonalLines();
+//    hydroThermalVentsMap.printMap();
+
+    return hydroThermalVentsMap.calculateOverlappingLines(atLeastNumberOfOverlaps);
+  }
+
   private void setupCoords(List<String> lines) {
     List<HydroThermalVentsLine> hydroThermalVentsLines = lines.stream()
         .map(line -> line.split(" -> "))

@@ -27,6 +27,14 @@ public final class HydroThermalVentsMap {
     }
   }
 
+  public void drawDiagonalLines() {
+    for (HydroThermalVentsLine hydroThermalVentsLine : hydroThermalVentsLines) {
+      if (hydroThermalVentsLine.isDiagonal()) {
+        drawDiagonalLine(hydroThermalVentsLine);
+      }
+    }
+  }
+
   public long calculateOverlappingLines(int atLeastNumberOfOverlaps) {
     return Arrays.stream(hydrothermalVentsMap)
         .flatMapToInt(Arrays::stream)
@@ -60,6 +68,40 @@ public final class HydroThermalVentsMap {
     } else {
       IntStream.rangeClosed(hydroThermalVentsLine.y2(), hydroThermalVentsLine.y1())
           .forEach(y -> hydrothermalVentsMap[y][hydroThermalVentsLine.x1()] += 1);
+    }
+  }
+
+  private void drawDiagonalLine(HydroThermalVentsLine hydroThermalVentsLine) {
+    if (hydroThermalVentsLine.x1() < hydroThermalVentsLine.x2()) {
+      drawDiagonalLeftToRight(hydroThermalVentsLine);
+    } else {
+      drawDiagonalRightToLeft(hydroThermalVentsLine);
+    }
+  }
+
+  private void drawDiagonalLeftToRight(HydroThermalVentsLine hydroThermalVentsLine) {
+    int steps = hydroThermalVentsLine.x2() - hydroThermalVentsLine.x1();
+    if (hydroThermalVentsLine.y1() < hydroThermalVentsLine.y2()) {
+      for (int i = 0; i <= steps; i++) {
+        hydrothermalVentsMap[hydroThermalVentsLine.y1() + i][hydroThermalVentsLine.x1() + i] += 1;
+      }
+    } else {
+      for (int i = 0; i <= steps; i++) {
+        hydrothermalVentsMap[hydroThermalVentsLine.y1() - i][hydroThermalVentsLine.x1() + i] += 1;
+      }
+    }
+  }
+
+  private void drawDiagonalRightToLeft(HydroThermalVentsLine hydroThermalVentsLine) {
+    int steps = hydroThermalVentsLine.x1() - hydroThermalVentsLine.x2();
+    if (hydroThermalVentsLine.y1() < hydroThermalVentsLine.y2()) {
+      for (int i = 0; i <= steps; i++) {
+        hydrothermalVentsMap[hydroThermalVentsLine.y1() + i][hydroThermalVentsLine.x1() - i] += 1;
+      }
+    } else {
+      for (int i = 0; i <= steps; i++) {
+        hydrothermalVentsMap[hydroThermalVentsLine.y1() - i][hydroThermalVentsLine.x1() - i] += 1;
+      }
     }
   }
 
