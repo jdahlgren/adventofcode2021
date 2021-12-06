@@ -5,6 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 import lombok.SneakyThrows;
 
 public class FileUtil {
@@ -13,6 +14,16 @@ public class FileUtil {
   public static List<Integer> readFileToIntList(String inputFile) {
     Path path = getPath(inputFile);
     return Files.readAllLines(path).stream().map(Integer::valueOf).toList();
+  }
+
+  @SneakyThrows
+  public static List<Integer> readCsvFileToIntList(String inputFile) {
+    Path path = getPath(inputFile);
+    return Files.readAllLines(path).stream()
+        .map(line -> line.split(","))
+        .flatMap(Stream::of)
+        .map(Integer::valueOf)
+        .toList();
   }
 
   @SneakyThrows
