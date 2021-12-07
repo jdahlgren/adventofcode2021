@@ -21,4 +21,18 @@ class Day7Test {
     assertThat(fuelRequired, is(344138L));
   }
 
+  @Test
+  void part2Example() {
+    Day7 day7 = new Day7("day7example.txt");
+    long fuelRequired = day7.cheapestAlignIncreasingBurnRate();
+    assertThat(fuelRequired, is(168L));
+  }
+
+  @Test
+  void part2() {
+    Day7 day7 = new Day7("day7.txt");
+    long fuelRequired = day7.cheapestAlignIncreasingBurnRate();
+    assertThat(fuelRequired, is(94862124L));
+  }
+
 }
