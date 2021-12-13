@@ -20,4 +20,18 @@ class Day10Test {
     long syntaxErrorScore = day10.calculateSyntaxErrorScore();
     assertThat(syntaxErrorScore, Is.is(290691L));
   }
+
+  @Test
+  void part2Example() {
+    Day10 day10 = new Day10("day10Example.txt");
+    long syntaxErrorScore = day10.calculateAutoCompleteScore();
+    assertThat(syntaxErrorScore, Is.is(288957L));
+  }
+
+  @Test
+  void part2() {
+    Day10 day10 = new Day10("day10.txt");
+    long syntaxErrorScore = day10.calculateAutoCompleteScore();
+    assertThat(syntaxErrorScore, Is.is(2768166558L));
+  }
 }
