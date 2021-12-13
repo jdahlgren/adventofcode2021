@@ -11,8 +11,6 @@ import java.util.stream.Collectors;
 public class Day13 {
 
   private final List<String> instructions;
-  private final int xMax;
-  private final int yMax;
   private Set<Coord> randomDots;
 
   public Day13(String s) {
@@ -20,14 +18,19 @@ public class Day13 {
     instructions = transparentPaper.stream().filter(line -> line.contains("fold along")).toList();
     randomDots = transparentPaper.stream().filter(line -> !line.contains("fold along")).filter(line -> !line.isBlank()).map(this::toCoord)
         .collect(Collectors.toSet());
-    xMax = randomDots.stream().map(Coord::x).max(Comparator.naturalOrder()).orElse(0);
-    yMax = randomDots.stream().map(Coord::y).max(Comparator.naturalOrder()).orElse(0);
   }
 
   public long foldOnce() {
     String firstInstruction = instructions.get(0);
     doAFold(firstInstruction);
     return randomDots.size();
+  }
+
+  public String foldAll() {
+    for (String instruction : instructions) {
+      doAFold(instruction);
+    }
+    return printCode();
   }
 
   private void doAFold(String firstInstruction) {
@@ -46,10 +49,10 @@ public class Day13 {
 
     for (Coord randomDot : randomDots) {
       if (isHorizontal && randomDot.y() > foldSize) {
-        int newY = yMax - randomDot.y();
+        int newY = foldSize - (randomDot.y() - foldSize);
         dotsAfterFold.add(new Coord(randomDot.x(), newY));
       } else if (!isHorizontal && randomDot.x() > foldSize) {
-        int newX = xMax - randomDot.x();
+        int newX = foldSize - (randomDot.x() - foldSize);
         dotsAfterFold.add(new Coord(newX, randomDot.y()));
       } else {
         dotsAfterFold.add(randomDot);
@@ -57,6 +60,24 @@ public class Day13 {
 
     }
     randomDots = dotsAfterFold;
+  }
+
+  private String printCode() {
+    int xMaxAtEnd = randomDots.stream().map(Coord::x).max(Comparator.naturalOrder()).orElse(0);
+    int yMaxAtEnd = randomDots.stream().map(Coord::y).max(Comparator.naturalOrder()).orElse(0);
+    StringBuilder sb = new StringBuilder();
+    for (int j = 0; j < yMaxAtEnd + 1; j++) {
+      for (int i = 0; i < xMaxAtEnd + 1; i++) {
+        if (randomDots.contains(new Coord(i, j))) {
+          sb.append("#");
+        } else {
+          sb.append(" ");
+        }
+      }
+      sb.append("\n");
+    }
+    System.out.println(sb);
+    return sb.toString();
   }
 
   private Coord toCoord(String line) {
