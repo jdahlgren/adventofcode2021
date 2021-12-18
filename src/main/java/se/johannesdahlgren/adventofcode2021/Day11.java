@@ -24,10 +24,7 @@ public class Day11 {
     AtomicLong flashes = new AtomicLong();
     printOctopusEnergyLevels();
     for (int i = 0; i < steps; i++) {
-      octopuses.forEach(octopus -> octopus.energy += 1);
-      octopuses.stream()
-          .filter(Octopus::willFlash)
-          .forEach(this::flash);
+      doOneStep();
       octopuses.stream()
           .filter(Octopus::isHasFlashed)
           .forEach(octopus -> {
@@ -38,6 +35,28 @@ public class Day11 {
       printOctopusEnergyLevels();
     }
     return flashes.get();
+  }
+
+  public int firstStepForAllToFlash() {
+    int step = 0;
+    boolean didAllFlash = false;
+    while (!didAllFlash) {
+      doOneStep();
+      didAllFlash = octopuses.stream().allMatch(Octopus::isHasFlashed);
+      octopuses.stream()
+          .filter(Octopus::isHasFlashed)
+          .forEach(Octopus::reset
+          );
+      step++;
+    }
+    return step;
+  }
+
+  private void doOneStep() {
+    octopuses.forEach(octopus -> octopus.energy += 1);
+    octopuses.stream()
+        .filter(Octopus::willFlash)
+        .forEach(this::flash);
   }
 
   private void flash(Octopus octopus) {

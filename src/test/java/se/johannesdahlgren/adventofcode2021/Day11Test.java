@@ -27,4 +27,18 @@ class Day11Test {
     long flashes = day11.countFlashes(100);
     assertThat(flashes, Is.is(1773L));
   }
+
+  @Test
+  void part2Example() {
+    Day11 day11 = new Day11("day11Example2.txt");
+    int firstStep = day11.firstStepForAllToFlash();
+    assertThat(firstStep, Is.is(195));
+  }
+
+  @Test
+  void part2() {
+    Day11 day11 = new Day11("day11.txt");
+    int firstStep = day11.firstStepForAllToFlash();
+    assertThat(firstStep, Is.is(494));
+  }
 }
