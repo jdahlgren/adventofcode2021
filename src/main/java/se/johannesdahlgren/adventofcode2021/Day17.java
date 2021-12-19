@@ -48,6 +48,26 @@ public class Day17 {
     return probeYMax;
   }
 
+  public int howManyInitialVelocitiesHits() {
+    int numberOfProbesThatHit = 0;
+    for (int i = 0; i <= xMax; i++) {
+      // An estimated guess for y velocity
+      for (int j = -100; j < 100; j++) {
+
+        Probe probe = new Probe(i, j);
+        while (probe.xPos <= xMax && probe.yPos >= yMin) {
+          if (xMin <= probe.xPos && probe.yPos <= yMax) {
+            numberOfProbesThatHit++;
+            break;
+          }
+          probe.doStep();
+        }
+      }
+    }
+
+    return numberOfProbesThatHit;
+  }
+
   private static class Probe {
 
     int xPos = 0;
