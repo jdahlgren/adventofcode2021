@@ -67,6 +67,21 @@ public class FileUtil {
     return twoDimensionalArray;
   }
 
+  @SneakyThrows
+  public static char[][] linesToString2DArray(List<String> lines) {
+    char[][] twoDimensionalArray = new char[lines.get(0).length()][lines.size()];
+    for (int i = 0; i < lines.size(); i++) {
+      String line = lines.get(i);
+      for (int j = 0; j < line.length(); j++) {
+        char rowValue = line.charAt(j);
+        twoDimensionalArray[i][j] = rowValue;
+//        System.out.print(rowValue);
+      }
+//      System.out.println();
+    }
+    return twoDimensionalArray;
+  }
+
   private static Path getPath(String inputFile) {
     return Paths.get("src/main/resources/" + inputFile);
   }
