@@ -21,4 +21,18 @@ class Day20Test {
     assertThat(litPixels, Is.is(5395L));
   }
 
+  @Test
+  void part2Example() {
+    Day20 day20 = new Day20("day20Example.txt");
+    long litPixels = day20.enhanceTrenchMap(50);
+    assertThat(litPixels, Is.is(3351L));
+  }
+
+  @Test
+  void part2() {
+    Day20 day20 = new Day20("day20.txt");
+    long litPixels = day20.enhanceTrenchMap(50);
+    assertThat(litPixels, Is.is(17584L));
+  }
+
 }
