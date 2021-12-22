@@ -9,19 +9,25 @@ import java.util.stream.LongStream;
 public class Day22 {
 
   private final List<String> lines;
+  private final Pattern pattern = Pattern.compile("(on|off) x=(-?\\d+)..(-?\\d+),y=(-?\\d+)..(-?\\d+),z=(-?\\d+)..(-?\\d+)");
 
   public Day22(String inputFilename) {
     lines = FileUtil.readFileToStringList(inputFilename);
   }
 
-  public long rebootInnerReactor(int cubePosRegion) {
+  public long rebootInnerReactor(long cubePosRegion) {
     List<Cube> reactor = setupReactor(cubePosRegion);
-    Pattern pattern = Pattern.compile("(on|off) x=(-?\\d+)..(-?\\d+),y=(-?\\d+)..(-?\\d+),z=(-?\\d+)..(-?\\d+)");
+    reboot(cubePosRegion, reactor, pattern);
+
+    return reactor.stream().filter(cube -> cube.isOn).count();
+  }
+
+  private void reboot(long cubePosRegion, List<Cube> reactor, Pattern pattern) {
     for (String line : lines) {
       Matcher matcher = pattern.matcher(line);
       if (!matcher.find()) {
         System.out.println("Bad regex");
-        return 0;
+        return;
       }
       boolean setOn = matcher.group(1).equals("on");
       List<Long> xRange = LongStream.rangeClosed(Long.parseLong(matcher.group(2)), Long.parseLong(matcher.group(3)))
@@ -33,16 +39,14 @@ public class Day22 {
       reactor.stream()
           .filter(cube -> xRange.contains(cube.x) && yRange.contains(cube.y) && zRange.contains(cube.z))
           .forEach(cube -> cube.isOn = setOn);
-
     }
-    return reactor.stream().filter(cube -> cube.isOn).count();
   }
 
-  private List<Cube> setupReactor(int cubePosRegion) {
+  private List<Cube> setupReactor(long cubePosRegion) {
     List<Cube> innerReactor = new ArrayList<>();
-    for (int i = -cubePosRegion; i <= cubePosRegion; i++) {
-      for (int j = -cubePosRegion; j <= cubePosRegion; j++) {
-        for (int k = -cubePosRegion; k <= cubePosRegion; k++) {
+    for (long i = -cubePosRegion; i <= cubePosRegion; i++) {
+      for (long j = -cubePosRegion; j <= cubePosRegion; j++) {
+        for (long k = -cubePosRegion; k <= cubePosRegion; k++) {
           innerReactor.add(new Cube(i, j, k));
         }
       }

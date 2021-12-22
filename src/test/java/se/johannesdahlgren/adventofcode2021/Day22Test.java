@@ -27,4 +27,11 @@ class Day22Test {
     long numberIfCubesInOnState = day22.rebootInnerReactor(50);
     assertThat(numberIfCubesInOnState, Is.is(546724L));
   }
+
+  @Test
+  void part1Example3() {
+    Day22 day22 = new Day22("day22Example3.txt");
+    long numberIfCubesInOnState = day22.rebootInnerReactor(50);
+    assertThat(numberIfCubesInOnState, Is.is(474140L));
+  }
 }
